@@ -1,0 +1,7 @@
+# Figure reproduction only needs scientific Python + Jupyter (data is pre-generated).
+numpy>=1.24
+scipy>=1.10
+matplotlib>=3.7
+jupyter
+nbconvert
+ipykernel
