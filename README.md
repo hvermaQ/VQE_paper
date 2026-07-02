@@ -8,7 +8,12 @@ Self-contained reproduction of the **data figures** in the manuscript
 It bundles the four figure-producing notebooks and the **already-generated data**
 they consume (raw VQE convergence pickles + realistic-hardware QPU dumps), copied
 from the `eviden/VQE` working repository. No quantum simulation is re-run here —
-the notebooks only load the saved data and render figures.
+the notebooks only load the saved data and render figures. For provenance, the
+`notebooks/gen_*.ipynb` also include the **original data-generation code** (myQLM
+for HVA/RYA, qisk/Qiskit for the IBM data) — see *Data generation* below.
+
+`notebooks/` therefore holds two groups: the **figure** notebooks (listed next) and
+the **`gen_*`** generation notebooks (reference only).
 
 Schematic / circuit-diagram figures are **not** reproduced (they are drawn by hand,
 not from data): **Fig. 1** (VQE loop), **Fig. 2** (HVA circuit), **Fig. 3**
@@ -35,17 +40,40 @@ not from data): **Fig. 1** (VQE loop), **Fig. 2** (HVA circuit), **Fig. 3**
 
 ## Data provenance
 
-Copied verbatim from `eviden/VQE`:
+All data lives under `results/` (copied verbatim from `eviden/VQE`):
 
-- `archive/heisenberg_n5/{hva,rya}/Results/` — 50-seed noiseless (`noiseless_COBY_50_seeds.pkl`)
+- `results/heisenberg_n5/{hva,rya}/Results/` — 50-seed noiseless (`noiseless_COBY_50_seeds.pkl`)
   and per-ε noisy (`global_noisy_gates_seeds_assumptions_COBY_scipy/noisy-<base>_<expo>.pkl`,
-  ε ∈ {1e-3,1e-4,1e-5,1e-6,5e-4,5e-5,5e-6}) COBYLA convergence trajectories.
+  ε ∈ {1e-3,1e-4,1e-5,1e-6,5e-4,5e-5,5e-6}) COBYLA convergence trajectories (myQLM).
 - `results/hardware/` — IBM Nighthawk per-seed pickles (`ibm_nighthawk_{baseline,zne}_raw.pkl`)
-  plus `ibm_marrakesh_data.json`, `ionq_forte_data.json`, `iqm_apollo_data.json`.
+  plus `ibm_marrakesh_data.json`, `ionq_forte_data.json`, `iqm_apollo_data.json` (qisk / Qiskit).
 
 These binaries (~2.6 GB) are **git-ignored** (see `.gitignore`) — they live in the
 working tree but are not committed, mirroring the source repo's convention. Only the
 notebooks and this documentation are tracked in git.
+
+## Data generation (reference)
+
+The notebooks below are the **original code that produced the data above**. They are
+included for provenance/reproducibility only — they are **not** needed to render the
+figures, and they require their own heavy environments (myQLM / `qat` for HVA-RYA,
+and the "qisk" Qiskit + Aer + `qiskit-ibm-runtime` + Mitiq stack for IBM). Re-running
+them takes hours.
+
+| Generation notebook | Environment | Produces |
+|---|---|---|
+| `gen_hva_myqlm_noiseless.ipynb` | myQLM (`qat`) | `heisenberg_n5/hva/.../noiseless_COBY_50_seeds.pkl` (50 seeds) |
+| `gen_hva_myqlm_noisy.ipynb` | myQLM (`qat`) | `heisenberg_n5/hva/.../noisy-<base>_<expo>.pkl` (global-depolarizing, per ε) |
+| `gen_rya_myqlm_noiseless.ipynb` | myQLM (`qat`) | RYA noiseless trajectories |
+| `gen_rya_myqlm_noisy.ipynb` | myQLM (`qat`) | RYA noisy trajectories |
+| `gen_ibm_qisk_noisy_baseline.ipynb` | Qiskit + Aer | `ibm_nighthawk_baseline_raw.pkl` (raw noisy, FakeNighthawk) |
+| `gen_ibm_qisk_zne_mitiq_v5.ipynb` | Qiskit + Aer + Mitiq | `ibm_nighthawk_zne_raw.pkl` (ZNE gate-folding + Pauli twirl) |
+
+The HVA/RYA generators are the verbatim campaign notebooks (`HVA_dep_*` / `RYA_dep_*`
+from the archive); the noisy ones were run once per ε (7 noise levels). The IBM
+generators are the qisk scripts `vqe_noisy_baseline.py` and `vqe_zne_mitiq_v5.py`
+wrapped as notebooks; their output pickles were renamed to the `ibm_nighthawk_*`
+files consumed by `qpu_phenomenological_relations.ipynb`.
 
 ## Run
 
