@@ -13,7 +13,10 @@ NOTEBOOKS=(
 
 for nb in "${NOTEBOOKS[@]}"; do
   echo "==> executing $nb.ipynb"
-  jupyter nbconvert --to notebook --execute --inplace \
+  # --allow-errors: some notebooks carry extra exploratory cells beyond the paper
+  # figures (e.g. the transcendental notebook's post-Fig-8 crossover analysis);
+  # the manuscript figures are saved before those, so don't abort the run on them.
+  jupyter nbconvert --to notebook --execute --inplace --allow-errors \
     --ExecutePreprocessor.timeout=2400 "$nb.ipynb"
 done
 

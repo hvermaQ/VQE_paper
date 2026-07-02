@@ -64,3 +64,16 @@ jupyter nbconvert --to notebook --execute --inplace heisenberg_hva_noisy_comp.ip
 
 Only NumPy / SciPy / Matplotlib / Jupyter are needed — no Qiskit or myQLM, since the
 data is already generated.
+
+`run_all.sh` passes `--allow-errors`: a couple of notebooks carry extra exploratory
+cells *after* their manuscript figures (e.g. the transcendental notebook's
+"crossover analysis" following Fig. 8). Those are not paper figures and are allowed
+to fail without aborting the run.
+
+### Verified
+
+`transcendental_ng_solver` (Fig. 8) and `qpu_phenomenological_relations`
+(Fig. 10, `fig10_FakeNighthawk.png`) were executed headlessly here and render
+correctly. The two heavy HVA/RYA notebooks each load ~1.5 GB of trajectories; they
+are wired to the same copied data (all paths verified) but were not executed during
+setup.
