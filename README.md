@@ -79,7 +79,7 @@ All data lives under `results/`. These binaries (~2.6 GB) are **git-ignored** (s
 `.gitignore`) — they are not committed; only the notebooks and this documentation are
 tracked in git. The data is archived on Zenodo:
 
-> **Zenodo DOI:** `10.5281/zenodo.XXXXXXX` <!-- TODO: replace after Zenodo upload -->
+> **Zenodo DOI:** `10.5281/zenodo.21367662` 
 
 To get the data, download `results.zip` (~776 MiB) from the Zenodo record into the
 repo root and unzip it there — it unpacks into `results/`:
