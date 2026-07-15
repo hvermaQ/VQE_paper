@@ -43,7 +43,7 @@ VQE_paper/
 │   └── hardware/…                              # FakeNighthawk QPU dumps
 ├── figures/                           # figure outputs (regenerated; git-ignored)
 ├── run_all.sh                         # execute all four figure notebooks
-└── requirements.txt                   # NumPy / SciPy / Matplotlib / Jupyter
+└── requirements.txt                   # NumPy / SciPy / Matplotlib / Seaborn / Jupyter
 ```
 
 Schematic / circuit-diagram figures are **not** reproduced (they are drawn by hand,
@@ -76,8 +76,17 @@ not from data): **Fig. 1** (VQE loop), **Fig. 2** (HVA circuit), **Fig. 3**
 ## Data (already generated)
 
 All data lives under `results/`. These binaries (~2.6 GB) are **git-ignored** (see
-`.gitignore`) — they live in the working tree but are not committed; only the
-notebooks and this documentation are tracked in git.
+`.gitignore`) — they are not committed; only the notebooks and this documentation are
+tracked in git. The data is archived on Zenodo:
+
+> **Zenodo DOI:** `10.5281/zenodo.XXXXXXX` <!-- TODO: replace after Zenodo upload -->
+
+To get the data, download `results.zip` (~776 MiB) from the Zenodo record into the
+repo root and unzip it there — it unpacks into `results/`:
+
+```bash
+unzip results.zip   # creates results/heisenberg_n5/... and results/hardware/...
+```
 
 - **`results/heisenberg_n5/{hva,rya}/Results/`** — myQLM COBYLA convergence trajectories:
   - `noiseless_COBY_50_seeds.pkl` — 50-seed noiseless run (all `N_layers`).
@@ -114,8 +123,9 @@ notebooks; their output pickles are renamed to the `ibm_nighthawk_*` files consu
 
 ## Run
 
-Only NumPy / SciPy / Matplotlib / Jupyter are needed — no Qiskit or myQLM, since the
-data is already generated.
+Only NumPy / SciPy / Matplotlib / Seaborn / Jupyter are needed — no Qiskit or myQLM,
+since the data is already generated. If you cloned from GitHub, first download the
+data from Zenodo (see **Data** above).
 
 ```bash
 python -m venv .venv && . .venv/bin/activate
