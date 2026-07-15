@@ -1,7 +1,35 @@
-# Figure reproduction only needs scientific Python + Jupyter (data is pre-generated).
+# -----------------------------------------------------------------------------
+# Core: figure reproduction (notebooks/analysis/ via run_all.sh).
+# Data is pre-generated under results/, so only scientific Python + Jupyter
+# is needed here.
+# -----------------------------------------------------------------------------
 numpy>=1.24
 scipy>=1.10
 matplotlib>=3.7
+seaborn>=0.13
 jupyter
 nbconvert
 ipykernel
+
+# -----------------------------------------------------------------------------
+# Optional: data-generation notebooks (notebooks/data_generation/).
+# These need TWO SEPARATE environments — myQLM (qat-core) requires numpy 1.x,
+# while the Qiskit stack below was run on numpy 2.x. Do not install both sets
+# into one environment. Versions below are the ones the paper data was
+# generated with.
+#
+# Environment A — myQLM (gen_{hva,rya}_myqlm_{noiseless,noisy}.ipynb):
+#   myqlm==1.11.3
+#   myqlm-fermion==1.2.0        # provides qat.fermion
+#   numpy==1.26.3
+#   scipy==1.12.0
+#
+# Environment B — Qiskit + Mitiq (gen_ibm_qisk_*.ipynb):
+#   qiskit==2.3.0
+#   qiskit-aer==0.17.2
+#   qiskit-ibm-runtime==0.45.0  # fake_provider (FakeNighthawk)
+#   mitiq==1.0.0                # ZNE gate folding + Pauli twirling
+#   joblib==1.5.3               # parallel seed execution
+#   numpy==2.2.6
+#   scipy==1.17.0
+# -----------------------------------------------------------------------------
